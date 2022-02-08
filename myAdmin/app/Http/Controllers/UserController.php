@@ -38,6 +38,7 @@ class UserController extends Controller
         $user->password = $register['password'];
 
         $user->save();
+        return response()->json(["status"=>"success", "id" => $user->id]);
 
     }
 
@@ -60,7 +61,11 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        //
+        $user = new User();
+        return response()->json([
+            'status'=>'success',
+            'data' => $user->find($id)
+        ]);
     }
 
     /**
@@ -71,6 +76,7 @@ class UserController extends Controller
      */
     public function edit($id)
     {
+
         //
     }
 
@@ -83,7 +89,20 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $user = User::find($id);
+        $user->first_name = $request['firstName'];
+        $user->last_name = $request['lastName'];
+        $user->age = $request['age'];
+        $user->phone = $request['phone'];
+        $user->email = $request['email'];
+        $user->password = $request['password'];
+
+        $user->save();
+        return response()->json([
+           'status'=> 'updated',
+           'user' => $user
+        ]);
+
     }
 
     /**
@@ -94,6 +113,10 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        //
+       User::find($id)->delete();
+
+       return response()->json([
+           "status"=>"deleted"
+       ]);
     }
 }

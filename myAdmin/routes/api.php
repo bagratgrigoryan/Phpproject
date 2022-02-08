@@ -14,5 +14,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/users', 'UserController@index' );
-Route::post('/users/register', 'UserController@create' );
+Route::get('/users', 'UserController@index');
+Route::post('/users/register', 'UserController@create');
+Route::get('/users/{id}', 'UserController@show');
+Route::post('/users/update/{id}', 'UserController@update');
+Route::post('/users/delete/{id}', 'UserController@destroy');
