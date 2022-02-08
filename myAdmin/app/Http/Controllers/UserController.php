@@ -30,12 +30,12 @@ class UserController extends Controller
     {
         $user = new User();
 
-        $user->first_name = $register['firstName'];
-        $user->last_name = $register['lastName'];
-        $user->age = $register['age'];
-        $user->phone = $register['phone'];
-        $user->email = $register['email'];
-        $user->password = $register['password'];
+        $user->first_name = $register->firstName;
+        $user->last_name = $register->lastName;
+        $user->age = $register->age;
+        $user->phone = $register->phone;
+        $user->email = $register->email;
+        $user->password = $register->password;
 
         $user->save();
         return response()->json(["status"=>"success", "id" => $user->id]);
@@ -90,12 +90,12 @@ class UserController extends Controller
     public function update(Request $request, $id)
     {
         $user = User::find($id);
-        $user->first_name = $request['firstName'];
-        $user->last_name = $request['lastName'];
-        $user->age = $request['age'];
-        $user->phone = $request['phone'];
-        $user->email = $request['email'];
-        $user->password = $request['password'];
+        $user->first_name = $request->firstName;
+        $user->last_name = $request->lastName;
+        $user->age = $request->age;
+        $user->phone = $request->phone;
+        $user->email = $request->email;
+        $user->password = $request->password;
 
         $user->save();
         return response()->json([
