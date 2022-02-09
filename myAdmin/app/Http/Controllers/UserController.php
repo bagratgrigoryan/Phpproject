@@ -4,10 +4,13 @@ namespace App\Http\Controllers;
 
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
+
 
 
 class UserController extends Controller
 {
+
     /**
      * Display a listing of the resource.
      *
@@ -26,10 +29,10 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
     public function create(Request $register)
     {
         $user = new User();
-
         $user->first_name = $register->firstName;
         $user->last_name = $register->lastName;
         $user->age = $register->age;
@@ -38,7 +41,8 @@ class UserController extends Controller
         $user->password = $register->password;
 
         $user->save();
-        return response()->json(["status"=>"success", "id" => $user->id]);
+
+        return response()->json(['status' =>"success",'user' => $user]);
 
     }
 
@@ -48,9 +52,14 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function login(Request $request)
     {
-        //
+        $user = User::all();
+        return response()->json([
+            "status"=>"success",
+            "data" => $user->where('email',"=",$request['login'])->
+            where('password',"=",$request['password'])
+        ]);
     }
 
     /**
