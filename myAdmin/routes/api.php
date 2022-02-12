@@ -21,3 +21,4 @@ Route::get('/users/{id}', 'UserController@show');
 Route::put('/users/{id}', 'UserController@getValid');
 Route::put('/users/{id}', 'UserController@update');
 Route::delete('/users/{id}', 'UserController@destroy');
+Route::post('users/user', 'UserController@findUser');

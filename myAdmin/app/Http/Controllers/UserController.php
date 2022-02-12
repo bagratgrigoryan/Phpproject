@@ -30,6 +30,14 @@ class UserController extends Controller
      * @return \Illuminate\Http\Response
      */
 
+    public function findUser (Request $req)
+    {
+        $user = User::all();
+        return response()->json([
+            "status"=>"success",
+            "data" => $user->where('email',"=", $req->header('Authorization'))
+        ]);
+    }
     public function create(Request $register)
     {
         $user = new User();
@@ -128,4 +136,5 @@ class UserController extends Controller
            "status"=>"deleted"
        ]);
     }
+
 }
