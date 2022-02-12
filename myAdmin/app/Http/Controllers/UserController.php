@@ -30,14 +30,7 @@ class UserController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    public function findUser (Request $req)
-    {
-        $user = User::all();
-        return response()->json([
-            "status"=>"success",
-            "data" => $user->where('email',"=", $req->header('Authorization'))
-        ]);
-    }
+
     public function create(Request $register)
     {
         $user = new User();
@@ -53,7 +46,11 @@ class UserController extends Controller
         return response()->json(['status' =>"success",'user' => $user]);
 
     }
-
+    public function findUser (Request $req)
+    {
+        $user = User::where('email', $req->header('Authorization'))->first();
+        return response()->json(["data" => $user]);
+    }
     /**
      * Store a newly created resource in storage.
      *
@@ -62,12 +59,11 @@ class UserController extends Controller
      */
     public function login(Request $request)
     {
-        $user = User::all();
+        $user = User::where('email',$request->login)->
+        where('password',$request->password)->first();
         return response()->json([
-            "status"=>"success",
-            "data" => $user->where('email',"=",$request['login'])->
-            where('password',"=",$request['password'])
-        ]);
+            "data"=> $user
+                ]);
     }
 
     /**
