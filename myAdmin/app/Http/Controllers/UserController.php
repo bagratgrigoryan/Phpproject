@@ -41,6 +41,7 @@ class UserController extends Controller
         $user->email = $register->email;
         $user->password = $register->password;
 
+
         $user->save();
 
         return response()->json(['status' =>"success",'user' => $user]);
@@ -48,7 +49,7 @@ class UserController extends Controller
     }
     public function findUser (Request $req)
     {
-        $user = User::where('email', $req->header('Authorization'))->first();
+        $user = User::where('remember_token', $req->header('Authorization'))->first();
         return response()->json(["data" => $user]);
     }
     /**
@@ -59,8 +60,13 @@ class UserController extends Controller
      */
     public function login(Request $request)
     {
+
         $user = User::where('email',$request->login)->
         where('password',$request->password)->first();
+
+        $user->remember_token = md5($user->id . time() . $user->email);
+        $user->save();
+
         return response()->json([
             "data"=> $user
                 ]);
